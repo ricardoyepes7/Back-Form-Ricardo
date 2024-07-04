@@ -4,7 +4,7 @@ import com.example.form.domain.model.University;
 
 import java.util.List;
 
-public interface IUniversityPersistencePort {
+public interface IUniversityProviderPort {
     List<University> getUniversitiesByCountry(String country);
 
 }

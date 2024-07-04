@@ -1,7 +1,7 @@
-package com.example.form.infraestructure.output.feign.mapper;
+package com.example.form.infraestructure.output.feignclient.mapper;
 
 import com.example.form.domain.model.University;
-import com.example.form.infraestructure.output.feign.entity.UniversityEntity;
+import com.example.form.infraestructure.output.feignclient.entity.UniversityEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

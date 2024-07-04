@@ -1,14 +1,13 @@
 package com.example.form.application.mapper;
 
-import com.example.form.application.dto.DegreeDto;
-import com.example.form.domain.model.Degree;
+import com.example.form.application.dto.LanguageDto;
+import com.example.form.domain.model.Language;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
-public interface DegreeDtoMapper {
-
-    DegreeDto toDto(Degree degree);
+public interface LanguageDtoMapper {
+    LanguageDto toDto(Language language);
 }

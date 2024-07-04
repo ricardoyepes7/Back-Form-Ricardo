@@ -1,16 +1,16 @@
-package com.example.form.infraestructure.output.feign.adapter;
+package com.example.form.infraestructure.output.feignclient.adapter;
 
 import com.example.form.domain.model.University;
-import com.example.form.domain.spi.IUniversityPersistencePort;
-import com.example.form.infraestructure.output.feign.feignclient.IUniversityHipolabsApi;
-import com.example.form.infraestructure.output.feign.mapper.UniversityEntityMapper;
+import com.example.form.domain.spi.IUniversityProviderPort;
+import com.example.form.infraestructure.output.feignclient.feign.IUniversityHipolabsApi;
+import com.example.form.infraestructure.output.feignclient.mapper.UniversityEntityMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class UniversityFeignAdapter implements IUniversityPersistencePort {
+public class UniversityFeignAdapter implements IUniversityProviderPort {
     private final IUniversityHipolabsApi universityHipolabsApi;
     private final UniversityEntityMapper universityEntityMapper;
 

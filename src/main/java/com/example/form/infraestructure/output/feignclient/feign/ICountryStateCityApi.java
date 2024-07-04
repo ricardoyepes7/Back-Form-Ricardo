@@ -1,6 +1,6 @@
-package com.example.form.infraestructure.output.feign.feignclient;
+package com.example.form.infraestructure.output.feignclient.feign;
 
-import com.example.form.infraestructure.output.feign.entity.LocationEntity;
+import com.example.form.infraestructure.output.feignclient.entity.LocationEntity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

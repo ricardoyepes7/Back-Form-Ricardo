@@ -2,29 +2,29 @@ package com.example.form.domain.usecase;
 
 import com.example.form.domain.api.IDegreeServicePort;
 import com.example.form.domain.model.Degree;
-import com.example.form.domain.spi.IDegreePersistencePort;
+import com.example.form.domain.spi.IDegreeProviderPort;
 
 import java.util.List;
 
 public class DegreeUseCase implements IDegreeServicePort {
-    private final IDegreePersistencePort degreePersistencePort;
+    private final IDegreeProviderPort degreeProviderPort;
 
-    public DegreeUseCase(IDegreePersistencePort degreePersistencePort) {
-        this.degreePersistencePort = degreePersistencePort;
+    public DegreeUseCase(IDegreeProviderPort degreeProviderPort) {
+        this.degreeProviderPort = degreeProviderPort;
     }
 
     @Override
     public List<Degree> getAllDegreesByUserId(long userId) {
-        return degreePersistencePort.getAllDegreesByUserId(userId);
+        return degreeProviderPort.getAllDegreesByUserId(userId);
     }
 
     @Override
     public void saveDegree(Degree degree) {
-        degreePersistencePort.saveDegree(degree);
+        degreeProviderPort.saveDegree(degree);
     }
 
     @Override
     public void deleteAllDegreesByUserId(long userId) {
-        degreePersistencePort.deleteAllDegreesByUserId(userId);
+        degreeProviderPort.deleteAllDegreesByUserId(userId);
     }
 }

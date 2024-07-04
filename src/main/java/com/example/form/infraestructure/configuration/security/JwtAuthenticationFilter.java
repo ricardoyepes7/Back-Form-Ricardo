@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +18,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    private final TokenService tokenService;
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         AuthCredentials authCredentials;
@@ -38,26 +42,27 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         UserDetailsImp userDetailsImp = (UserDetailsImp) authResult.getPrincipal();
-        String token = TokenUtil.generateToken(userDetailsImp.getName(), userDetailsImp.getUsername());
-        response.addHeader("Authorization",token);
-        Map<String,String> success= new HashMap<>();
-        success.put("token",token);
+        String token = tokenService.generateToken(userDetailsImp.getName(), userDetailsImp.getUsername());
+        response.addHeader("Authorization", token);
+        Map<String, String> success = new HashMap<>();
+        success.put("token", token);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(),success);
+        new ObjectMapper().writeValue(response.getOutputStream(), success);
 
         super.successfulAuthentication(request, response, chain, authResult);
     }
+
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
 
-        response.setHeader("error","Bad credentials");
-        response.setStatus(HttpStatus.FORBIDDEN.value());
-
-        Map<String,String> error= new HashMap<>();
-        error.put("title","Bad credentials");
-        error.put("status","403");
+        response.setHeader("error", failed.getMessage());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        Map<String, String> error = new HashMap<>();
+        error.put("title", failed.getMessage());
+        error.put("status", String.valueOf(HttpStatus.UNAUTHORIZED.value()));
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(),error);
+        new ObjectMapper().writeValue(response.getOutputStream(), error);
+
 
         super.unsuccessfulAuthentication(request, response, failed);
     }

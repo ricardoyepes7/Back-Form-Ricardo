@@ -5,6 +5,7 @@ import com.example.form.application.handler.interfaces.IDegreeHandler;
 import com.example.form.application.mapper.DegreeDtoMapper;
 import com.example.form.domain.api.IDegreeServicePort;
 import com.example.form.domain.api.IUserServicePort;
+import com.example.form.domain.model.Degree;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,14 +28,19 @@ public class DegreeHandlerImp implements IDegreeHandler {
                 .toList();
     }
 
-    @Transactional
+
     @Override
+    @Transactional
     public void saveUserDegrees(String email, List<DegreeDto> degreesDto) {
         long userId = userServicePort.getUserByEmail(email).getId();
         degreeServicePort.deleteAllDegreesByUserId(userId);
         degreesDto.stream()
-                .map(degreeDtoMapper::toModel)
-                .peek(degree -> degree.setUserId(userId))
+                .map(degreeDto -> Degree.builder()
+                        .university(degreeDto.getUniversity())
+                        .userId(userId)
+                        .cityId(degreeDto.getIso2())
+                        .title(degreeDto.getTitle())
+                        .build())
                 .forEach(degreeServicePort::saveDegree);
     }
 }

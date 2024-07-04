@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -35,7 +36,7 @@ public class UserController {
     private ResponseEntity<HttpStatus> updateUser(@AuthenticationPrincipal String username,
                                                   @Valid @RequestBody UserDto userDto) {
         userHandler.updateUser(username, userDto);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/degrees")

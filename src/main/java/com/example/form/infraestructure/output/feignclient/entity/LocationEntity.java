@@ -1,4 +1,4 @@
-package com.example.form.infraestructure.output.feign.entity;
+package com.example.form.infraestructure.output.feignclient.entity;
 
 import lombok.Data;
 

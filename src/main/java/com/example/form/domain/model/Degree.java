@@ -1,57 +1,78 @@
 package com.example.form.domain.model;
 
 public class Degree {
-    private Long id;
-    private Long userId;
-    private String university;
-    private String title;
-    private String iso2;
+    private final Long id;
+    private final Long userId;
+    private final String university;
+    private final String title;
+    private final String cityId;
 
-    public Degree(Long id, Long userId, String university, String title, String iso2) {
-        this.id = id;
-        this.userId = userId;
-        this.university = university;
-        this.title = title;
-        this.iso2 = iso2;
+    private Degree(DegreeBuilder builder) {
+        this.id = builder.id;
+        this.userId = builder.userId;
+        this.university = builder.university;
+        this.title = builder.title;
+        this.cityId = builder.cityId;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getUserId() {
         return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getUniversity() {
         return university;
     }
 
-    public void setUniversity(String university) {
-        this.university = university;
-    }
-
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getCityId() {
+        return cityId;
     }
 
-    public String getIso2() {
-        return iso2;
+    public static DegreeBuilder builder() {
+        return new DegreeBuilder();
     }
 
-    public void setIso2(String iso2) {
-        this.iso2 = iso2;
+    public static class DegreeBuilder {
+        private Long id;
+        private Long userId;
+        private String university;
+        private String title;
+        private String cityId;
+
+        public DegreeBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public DegreeBuilder userId(Long userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public DegreeBuilder university(String university) {
+            this.university = university;
+            return this;
+        }
+
+        public DegreeBuilder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public DegreeBuilder cityId(String cityId) {
+            this.cityId = cityId;
+            return this;
+        }
+
+        public Degree build() {
+            return new Degree(this);
+        }
     }
 }

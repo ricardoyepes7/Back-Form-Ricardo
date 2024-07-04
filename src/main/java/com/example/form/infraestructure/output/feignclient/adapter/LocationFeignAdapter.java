@@ -1,16 +1,16 @@
-package com.example.form.infraestructure.output.feign.adapter;
+package com.example.form.infraestructure.output.feignclient.adapter;
 
 import com.example.form.domain.model.Location;
-import com.example.form.domain.spi.ILocationPersistencePort;
-import com.example.form.infraestructure.output.feign.feignclient.ICountryStateCityApi;
-import com.example.form.infraestructure.output.feign.mapper.LocationEntityMapper;
+import com.example.form.domain.spi.ILocationProviderPort;
+import com.example.form.infraestructure.output.feignclient.feign.ICountryStateCityApi;
+import com.example.form.infraestructure.output.feignclient.mapper.LocationEntityMapper;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class LocationFeignAdapter implements ILocationPersistencePort {
+public class LocationFeignAdapter implements ILocationProviderPort {
     private final ICountryStateCityApi countryStateCityApi;
     private final LocationEntityMapper locationEntityMapper;
     private final String token;

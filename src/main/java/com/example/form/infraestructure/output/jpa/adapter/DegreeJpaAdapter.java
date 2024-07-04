@@ -1,7 +1,7 @@
 package com.example.form.infraestructure.output.jpa.adapter;
 
 import com.example.form.domain.model.Degree;
-import com.example.form.domain.spi.IDegreePersistencePort;
+import com.example.form.domain.spi.IDegreeProviderPort;
 import com.example.form.infraestructure.output.jpa.mapper.DegreeEntityMapper;
 import com.example.form.infraestructure.output.jpa.repository.IDegreeRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class DegreeJpaAdapter implements IDegreePersistencePort {
+public class DegreeJpaAdapter implements IDegreeProviderPort {
     private final IDegreeRepository degreeRepository;
     private final DegreeEntityMapper degreeEntityMapper;
 

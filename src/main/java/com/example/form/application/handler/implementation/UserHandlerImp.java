@@ -10,25 +10,28 @@ import com.example.form.domain.model.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-
 
 @Service
 @RequiredArgsConstructor
 public class UserHandlerImp implements IUserHandler {
     private final IUserServicePort userServicePort;
     private final UserDtoMapper userDtoMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    @Transactional
+
     @Override
+    @Transactional
     public void createUser(UserRegisterDto userRegisterDto) {
         if (!userRegisterDto.getPassword().equals(userRegisterDto.getConfirmPassword())) {
-            throw new PasswordNotMachException("Las contraseñas no coinciden",
-                    "Las contraseñas no coinciden",
-                    HttpStatus.CONFLICT);
+            throw new PasswordNotMachException();
         }
-        userServicePort.saveUser(userDtoMapper.toModel(userRegisterDto));
+        User user = User.builder()
+                .email(userRegisterDto.getEmail())
+                .password(passwordEncoder.encode(userRegisterDto.getPassword()))
+                .build();
+        userServicePort.saveUser(user);
     }
 
     @Override
@@ -36,14 +39,20 @@ public class UserHandlerImp implements IUserHandler {
         return userDtoMapper.toDto(userServicePort.getUserByEmail(email));
     }
 
-    @Transactional
     @Override
+    @Transactional
     public void updateUser(String email, UserDto userDto) {
         User oldUser = userServicePort.getUserByEmail(email);
-        User newUser = userDtoMapper.toModel(userDto);
-        newUser.setId(oldUser.getId());
-        newUser.setEmail(oldUser.getEmail());
-        newUser.setPassword(oldUser.getPassword());
+        User newUser = User.builder()
+                .id(oldUser.getId())
+                .email(oldUser.getEmail())
+                .password(oldUser.getPassword())
+                .name(userDto.getName())
+                .lastname(userDto.getLastname())
+                .birthDate(userDto.getBirthDate())
+                .currentCity(userDto.getCurrentCity())
+                .phone(userDto.getPhone())
+                .build();
         userServicePort.updateUser(newUser);
     }
 
